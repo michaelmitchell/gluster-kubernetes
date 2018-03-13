@@ -1,0 +1,27 @@
+sudo apt-get update \
+  && sudo apt-get install -y software-properties-common python-software-properties \
+  && sudo add-apt-repository ppa:gluster/glusterfs-3.8 \
+  && sudo apt-get update \
+  && sudo apt-get install -y glusterfs-client \
+  && sudo modprobe dm_snapshot \
+  && sudo modprobe dm_mirror \
+  && sudo modprobe dm_thin_pool \
+  && echo "dm_snapshot" | sudo tee -a /etc/modules \
+  && echo "dm_mirror" | sudo tee -a /etc/modules \
+  && echo "dm_thin_pool" | sudo tee -a /etc/modules \
+  && glusterfs --version \
+  && lsmod | grep dm_ \
+  && cat /etc/modules
+
+
+echo "deb http://packages.cloud.google.com/apt cloud-sdk-jessie main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list \
+  && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -\
+  && apt-get update && apt-get install google-cloud-sdk
+
+gsutil -m rsync -r gs://h-for-hype-uploads /www/wp-content/uploads
+
+
+sudo sysctl -w net.bridge.bridge-nf-call-iptables=1
+sudo sysctl -w net.bridge.bridge-nf-call-ip6tables=1
+echo "net.bridge.bridge-nf-call-iptables = 1" | sudo tee -a /etc/sysctl.conf
+echo "net.bridge.bridge-nf-call-ip6tables = 1" | sudo tee -a /etc/sysctl.conf

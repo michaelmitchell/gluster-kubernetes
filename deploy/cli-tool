@@ -1,0 +1,9 @@
+heketi-cli node add \
+      --zone=1 \
+      --cluster=27301b396fbc15b6380192088ecd4649 \
+      --management-host-name=gke-h-for-hype-storage-pool-bf92a405-cr5t \
+      --storage-host-name=10.138.0.8
+
+heketi-cli device add \
+      --name=/dev/sdb \
+      --node=7073f0fba6e4cb06ade4c8d4cab9d9c7
